@@ -23,7 +23,8 @@ jobs:
       -
         name: Eval version
         id: eval_version
-        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+        run: echo ::set-output name=version::$(cat VERSION)
+        
       -
         name: Build and push
         uses: docker/build-push-action@v3
@@ -31,4 +32,4 @@ jobs:
           context: .
           platforms: linux/arm/v7,linux/arm64/v8,linux/amd64
           push: true
-          tags: danidelaria/pihole-unbound:latest,danidelaria/pihole-unbound:${{ env.VERSION }}
+          tags: danidelaria/pihole-unbound:latest,danidelaria/pihole-unbound:${{ steps.eval_version.outputs.version }}
