@@ -6,24 +6,24 @@ jobs:
   pihole_inspect_version:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Pull and inspect pihole/pihole:latest
+
+      - name: Pull and inspect pihole/pihole:latest
         id: eval_pihole_version
         run: |
               docker pull pihole/pihole:latest
               echo ::set-output name=version::$(docker image inspect --format '{{ index .Config.Labels "org.opencontainers.image.version"}}' pihole/pihole:latest)
-      -
-        name: Eval repo version
+
+      - name: Eval repo version
         id: eval_our_version
         run: echo ::set-output name=version::$(cat VERSION)
 
-      - name: Print versions found
-        run: echo "Our version is ${{ steps.eval_our_version.outputs.version }}, pihole/pihole:latest version is ${{ steps.eval_pihole_version.outputs.version }}"
-      -
-        name: Git Auto Commit
+      - name: Modify version in VERSION
+        run: echo "${{ steps.eval_pihole_version.outputs.version }}" > VERSION
+        if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
+
+      - name: Git Auto Commit
         id: git-auto-commit
         uses: stefanzweifel/git-auto-commit-action@v4.15.0
         with:
