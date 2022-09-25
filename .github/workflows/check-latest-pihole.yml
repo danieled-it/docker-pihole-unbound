@@ -32,4 +32,4 @@ jobs:
       -
         name: Trigger docker-build-push workflow
         uses: ./.github/workflows/docker-build-push.yml
-        needs: Git Auto Commit
+        if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
