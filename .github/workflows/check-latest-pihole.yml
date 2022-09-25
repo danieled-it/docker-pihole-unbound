@@ -1,10 +1,8 @@
 name: Check pihole/pihole:latest version
 
 on:
-  # schedule:
-  #   - cron:  '50 16 * * *'
-  push:
-    branches: [ "main" ]
+  schedule:
+    - cron:  '30 17 * * *'
 
 jobs:
   pihole_inspect_version:
