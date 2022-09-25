@@ -32,4 +32,4 @@ jobs:
       -
         name: Trigger docker-build-push workflow
         uses: ./.github/workflows/docker-build-push.yml
-        needs: git-auto-commit
+        needs: Git Auto Commit
