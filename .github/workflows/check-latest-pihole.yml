@@ -32,6 +32,5 @@ jobs:
 
   trigger_docker-build-push:
     needs: pihole_inspect_version
-    runs-on: ubuntu-latest
     uses: ./.github/workflows/docker-build-push.yml
     if: ${{ needs.eval_our_version.outputs.version != needs.eval_pihole_version.outputs.version }}
