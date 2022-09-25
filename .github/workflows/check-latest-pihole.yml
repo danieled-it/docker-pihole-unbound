@@ -1,8 +1,6 @@
 name: Check pihole/pihole:latest version
 
-on:
-  schedule:
-    - cron:  '15 18 * * *'
+on: workflow_dispatch
 
 jobs:
   pihole_inspect_version:
@@ -26,7 +24,12 @@ jobs:
         run: echo "Our version is ${{ steps.eval_our_version.outputs.version }}, pihole/pihole:latest version is ${{ steps.eval_pihole_version.outputs.version }}"
       -
         name: Git Auto Commit
+        id: git-auto-commit
         uses: stefanzweifel/git-auto-commit-action@v4.15.0
         with:
           commit_message: "Auto-Commit: Bump version to ${{ steps.eval_pihole_version.outputs.version }}"
         if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
+      -
+        name: Trigger docker-build-push workflow
+        uses: ./.github/workflows/docker-build-push.yml
+        needs: git-auto-commit

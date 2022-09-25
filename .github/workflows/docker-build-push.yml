@@ -1,8 +1,6 @@
 name: danidelaria/pihole-unbound build and push
 
-on:
-  push:
-    branches: [ "main" ]
+on: workflow_call
 
 jobs:
   docker_build_push:
@@ -27,7 +25,6 @@ jobs:
         name: Eval version
         id: eval_version
         run: echo ::set-output name=version::$(cat VERSION)
-
       -
         name: Build and push
         uses: docker/build-push-action@v3
