@@ -2,7 +2,7 @@ name: Check pihole/pihole:latest version
 
 on:
   schedule:
-    - cron:  '00 17 * * *'
+    - cron:  '15 18 * * *'
 
 jobs:
   pihole_inspect_version:
