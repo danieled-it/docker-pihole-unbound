@@ -25,10 +25,10 @@ jobs:
         run: echo ::set-output name=version::$(cat VERSION)
 
       - name: Print versions found
-        run: echo "Our version is ${{ steps.eval_our_version.version }}, pihole/pihole:latest version is ${{ steps.eval_pihole_version.version }}"
+        run: echo "Our version is ${{ steps.eval_our_version.outputs.version }}, pihole/pihole:latest version is ${{ steps.eval_pihole_version.outputs.version }}"
       -
         name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.15.0
         with:
-          commit_message: "Auto-Commit: Bump version to ${{ steps.eval_pihole_version.version }}"
-        if: ${{ steps.eval_our_version.version != steps.eval_pihole_version.version }}
+          commit_message: "Auto-Commit: Bump version to ${{ steps.eval_pihole_version.outputs.version }}"
+        if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
