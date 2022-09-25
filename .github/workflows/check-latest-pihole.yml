@@ -29,7 +29,9 @@ jobs:
         with:
           commit_message: "Auto-Commit: Bump version to ${{ steps.eval_pihole_version.outputs.version }}"
         if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
-      -
-        name: Trigger docker-build-push workflow
-        uses: ./.github/workflows/docker-build-push.yml
-        if: ${{ steps.eval_our_version.outputs.version != steps.eval_pihole_version.outputs.version }}
+
+  trigger_docker-build-push:
+    needs: pihole_inspect_version
+    runs-on: ubuntu-latest
+    uses: ./.github/workflows/docker-build-push.yml
+    if: ${{ needs.eval_our_version.outputs.version != needs.eval_pihole_version.outputs.version }}
