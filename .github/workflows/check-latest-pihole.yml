@@ -35,7 +35,7 @@ jobs:
 
   docker_build_push:
     needs: pihole_inspect_version
-    if: needs.auto-commit-action.outputs.changes_detected == 'true'
+    if: ${{ needs.auto-commit-action.outputs.changes_detected == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
